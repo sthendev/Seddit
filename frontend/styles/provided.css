@@ -1,10 +1,11 @@
 /* base styles, feel free to edit */
 :root {
-  --reddit-blue: #0079D3;
-  --reddit-orange: #FF5700;
+  --reddit-blue: rgb(0, 121, 211);
+  --reddit-blue-lighter: rgb(76, 168, 237);
+  --reddit-orange: rgb(255, 87, 0);
   --reddit-grey: rgba(0, 0, 0, 0.0975);
   --reddit-light-grey:  rgba(0, 0, 0, 0.041);
-  --reddit-bg-color: #f1f1f7;
+  --reddit-bg-color: rgb(241, 241, 247);
   --body-text-size: 12px;
   --alt-text-color:  rgba(0, 0, 0, 0.65);
 }
@@ -14,16 +15,13 @@ body {
   margin: 0;
   padding: 0;
   background-color: var(--reddit-bg-color);
-  height: 100%;
   font-family: -apple-system, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
-footer {
-  border-top: 1px solid var(--reddit-grey);
-  padding: 10px;
-  background-color: white;
-  min-height: 50px;
-  text-align: right;
+header {
+  position: fixed;
+  top: 0;
+  width: 100%;
 }
 
 .alt-text {
@@ -86,8 +84,17 @@ footer {
   cursor: pointer;
 }
 
+.button:focus {
+  outline: none;
+}
+
 .button-primary {
+  background-color: white;
   color: var(--reddit-blue);
+}
+
+.button-primary:hover {
+  color: var(--reddit-blue-lighter);
 }
 
 .button-secondary {
@@ -95,8 +102,11 @@ footer {
   color: white;
 }
 
-.banner > *,
-footer > * {
+.button-secondary:hover {
+  background-color: var(--reddit-blue-lighter);
+}
+
+.banner > * {
   margin: 10px 25px;
 }
 
@@ -116,7 +126,7 @@ footer > * {
   min-width: 500px;
   max-width: 800px;
   width: 80%;
-  margin: 20px auto;
+  margin: 100px auto 20px auto;
   padding: 0;
 }
 

@@ -14,6 +14,11 @@ const Main = main({role: 'main'},
         Post(),
         Post(),
         Post(),
+        Post(),
+        Post(),
+        Post(),
+        Post(),
+        Post(),
         Post()
     )
 );

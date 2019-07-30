@@ -1,9 +1,24 @@
-#modal-backdrop {
+#modal {
     position: absolute;
     top: 0px;
     left: 0px;
     right: 0px;
     bottom: 0px;
-    background-color: black;
-    opacity: 0.5;
+    background-color: rgb(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+#modal-content {
+    margin: auto;
+    background-color: var(--reddit-bg-color);
+    cursor: default;
+    border-radius: 10px;
+    border: 1px solid black;
+}
+
+#form {
+    height: 600px;
+    width: 400px;
 }

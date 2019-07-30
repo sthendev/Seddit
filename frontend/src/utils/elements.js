@@ -40,12 +40,6 @@ export const main = ({id, role}, ...children) => {
     return el;
 }
 
-export const footer = ({id}, ...children) => {
-    const el = element({tag: 'footer', id: id}, ...children);
-
-    return el;
-}
-
 export const ul = ({id, classes, data}, ...children) => {
     const el = element({tag: 'ul', id: id, classes: classes, data: data}, ...children);
 
@@ -101,4 +95,8 @@ export const div = ({id, classes, text, data}, ...children) => {
     const el = element({tag: 'div', id: id, classes: classes, text: text, data: data}, ...children);
 
     return el;
+}
+
+export const form = ({id}, ...children) => {
+    const el = element({tag: 'form', id: id})
 }
