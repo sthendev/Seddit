@@ -1,0 +1,36 @@
+#login-form {
+    width: 400px;
+    height: 250px;
+}
+
+#login-error {
+    height: 16px;
+    font-size: 14px;
+    color: var(--reddit-orange);
+}
+
+form {
+    position: relative;
+}
+
+form h3 {
+    display: inline-block;
+    margin: 10px, 0;
+}
+
+form input {
+    width: 200px;
+    font-size: 14px;
+    height: 20px;
+    margin: 10px 0;
+    text-align: center;
+}
+
+input::placeholder {
+    font-size: 14px;
+  }
+
+form button {
+    margin: 10px 0;
+}
+

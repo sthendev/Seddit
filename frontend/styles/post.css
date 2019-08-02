@@ -2,7 +2,7 @@
 .post {
   display: flex;
   overflow: hidden;
-  margin: 20px 0;
+  margin-top: 20px;
   background-color: white;
   border: 1px solid var(--reddit-grey);
 }
@@ -21,12 +21,24 @@
   margin: 0;
 }
 
+.post-info {
+  font-size: 11px;
+  color: #999;
+}
+
+.post-info p {
+  display: inline;
+}
+
 .post-author {
-  margin: 5px 0;
-  font-size: 12px;
   color: var(--reddit-blue);
 }
 
 .post-author:hover {
   color: var(--reddit-blue-lighter);
+  cursor: pointer;
+}
+
+.post-text {
+  font-size: 14px;
 }

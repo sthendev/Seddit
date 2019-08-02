@@ -1,9 +1,11 @@
 import { div } from '../../utils/elements.js';
+import CloseButton from './CloseButton.js';
 
-const Modal = (Form) => {
+const Modal = (form) => {
     const el = div({id: 'modal'},
         div({id: 'modal-content'},
-            Form
+            form,
+            CloseButton()
         )
     );
 

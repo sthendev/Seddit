@@ -1,17 +1,19 @@
 /* base styles, feel free to edit */
 :root {
-  --reddit-blue: rgb(0, 121, 211);
-  --reddit-blue-lighter: rgb(76, 168, 237);
-  --reddit-orange: rgb(255, 87, 0);
+  --reddit-blue: #0079D3;
+  --reddit-blue-lighter: #4CA7ED;
+  --reddit-orange: #FF5700;
   --reddit-grey: rgba(0, 0, 0, 0.0975);
   --reddit-light-grey:  rgba(0, 0, 0, 0.041);
-  --reddit-bg-color: rgb(241, 241, 247);
+  --reddit-bg-color: #f1f1f7;
   --body-text-size: 12px;
   --alt-text-color:  rgba(0, 0, 0, 0.65);
+  --disabled-input: #ddd;
 }
 
 html,
 body {
+  height: 100%;
   margin: 0;
   padding: 0;
   background-color: var(--reddit-bg-color);
@@ -84,26 +86,14 @@ header {
   cursor: pointer;
 }
 
-.button:focus {
-  outline: none;
-}
-
 .button-primary {
   background-color: white;
   color: var(--reddit-blue);
 }
 
-.button-primary:hover {
-  color: var(--reddit-blue-lighter);
-}
-
 .button-secondary {
   background-color: var(--reddit-blue);
   color: white;
-}
-
-.button-secondary:hover {
-  background-color: var(--reddit-blue-lighter);
 }
 
 .banner > * {
@@ -126,8 +116,9 @@ header {
   min-width: 500px;
   max-width: 800px;
   width: 80%;
-  margin: 100px auto 20px auto;
-  padding: 0;
+  margin: auto;
+  padding: 20px 0 0 0;
+  box-sizing: border-box;
 }
 
 .feed-header {
@@ -141,3 +132,68 @@ header {
 }
 
 /* Add your styles here */
+
+#root {
+  height: 100%;
+}
+
+#app {
+  height: 100%;
+  position: relative;
+}
+
+#account-buttons {
+  display: inline;
+}
+
+main {
+  box-sizing: border-box;
+  height: 100%;
+  padding-top: 61px;
+}
+
+input {
+  background-color: var(--reddit-bg-color);
+  font: inherit;
+  font-size: var(--body-text-size);
+  border: none;
+  padding: 7.5px 15px;
+  outline: none;
+  border: 1px solid var(--reddit-grey);
+  border-radius: 4px;
+}
+
+input::placeholder {
+  letter-spacing: 0.5px;
+  font-size: var(--body-text-size);
+}
+
+input:focus {
+  background-color: white;
+  border-color: var(--reddit-blue);
+}
+
+input:disabled {
+  background-color: var(--disabled-input);
+  cursor: not-allowed;
+}
+
+.button:focus {
+  outline: none;
+}
+
+.button-primary:hover {
+  color: var(--reddit-blue-lighter);
+}
+
+.button-secondary:hover {
+  background-color: var(--reddit-blue-lighter);
+}
+
+.center-content {
+  text-align: center;
+}
+
+#user-title {
+  text-transform: none;
+}
