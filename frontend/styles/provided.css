@@ -18,6 +18,7 @@ body {
   padding: 0;
   background-color: var(--reddit-bg-color);
   font-family: -apple-system, 'Open Sans', 'Helvetica Neue', sans-serif;
+  overflow: hidden;
 }
 
 header {
@@ -140,6 +141,7 @@ header {
 #app {
   height: 100%;
   position: relative;
+  padding-top: 61px;
 }
 
 #account-buttons {
@@ -149,7 +151,8 @@ header {
 main {
   box-sizing: border-box;
   height: 100%;
-  padding-top: 61px;
+  padding-bottom: 61px;
+  overflow: scroll;
 }
 
 input {
@@ -196,4 +199,13 @@ input:disabled {
 
 #user-title {
   text-transform: none;
+}
+
+.fade {
+  animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }

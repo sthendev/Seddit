@@ -1,37 +1,54 @@
-import { li, div, h4, p } from '../../utils/elements.js';
-import { getTimeLapsedString } from '../../utils/timeUtils.js'
+import { li, div, h4, p, img } from '../../utils/elements.js';
+import SubLink from './SubLink.js';
+import UserLink from './UserLink.js';
+import TimeLapsed from './TimeLapsed.js';
+import Space from '../common/Space.js';
+import CommentButton from './CommentButton.js';
+import Voter from './Voter.js';
 
-const Post = ({id, text, title, meta: {author, subseddit, published, upvotes}, thumbnail, image, comments}) => {
-    const timeLapsed = getTimeLapsedString(new Date(), new Date(parseInt(published)));
+const Post = ({index, id, text, title, meta: {author, subseddit, published, upvotes}, image, comments}) => {
+    const mounted = document.getElementById(`post-${id}`);
+    
+    const postClasses = ['post'];
+    !mounted && postClasses.push('fade');
 
-    const el = li({classes: ['post'], data: 'id-post'},
-        div({classes: ['vote'], data: 'id-upvotes'}),
+    const publishedTime = parseInt(published);
+
+    const postImage = image 
+        ? img({imgData: image, classes: ['post-image']}) 
+        : null;
+
+    const el = li({id: `post-${id}`,classes: postClasses, data: 'id-post'},
+        div({classes: ['vote'], data: 'id-upvotes'},
+            Voter(index, upvotes.length)
+        ),
         div({classes: ['content']},
+            div({classes: ['post-info']},
+                SubLink(subseddit),
+                Space(),
+                p({
+                    text: 'Posted by ',
+                }),
+                UserLink(author),
+                Space(),
+                TimeLapsed(publishedTime)
+            ),
             h4({
                 classes: ['post-title', 'alt-text'],
                 text: `${title}...`,
                 data: 'id-title'
             }),
-            div({classes: ['post-info']},
-                p({
-                    text: 'Posted by ',
-                }),
-                p({
-                    classes: ['post-author'],
-                    text: author,
-                    data: 'id-author'
-                }),
-                p({
-                    text: ` ${timeLapsed}`
-                })
-            ),
             p({
                 classes: ['post-text'],
                 text: text,
                 data: 'id-text'
             }),
+            postImage,
+            CommentButton(comments.length)
         )
     );
+
+    
 
     return el;
 } 

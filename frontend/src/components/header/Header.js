@@ -1,5 +1,5 @@
 import { header, ul, li } from '../../utils/elements.js';
-import { TOKEN } from '../../api/initApi.js';
+import { getState } from '../../state/state.js';
 import Logo from './Logo.js';
 import SedditSearch from './SedditSearch.js';
 import LoginButton from './LoginButton.js';
@@ -8,7 +8,7 @@ import UserTitle from './UserTitle.js'
 
 const Header = () => {
     let navItems;
-    if (TOKEN) {
+    if (getState().loggedInUser) {
         navItems = [
             li({classes: ['nav-item']},
                 UserTitle()

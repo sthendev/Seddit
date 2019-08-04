@@ -1,7 +1,7 @@
 import { div } from '../../utils/elements.js';
 
 const Loader = () => {
-    const el = div({classes: ['loader']},
+    const el = div({classes: ['loader', 'fade']},
         div({classes: ['dots']},
             div({classes: ['loader-dot', 'first']}),
             div({classes: ['loader-dot', 'second']}),

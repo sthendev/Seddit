@@ -34,7 +34,9 @@ const getUserFromToken = async () => {
 }
 
 const App = () => {
-    !document.getElementById('app') && getUserFromToken();
+    const mounted = document.getElementById('app');
+    
+    !mounted && getUserFromToken();
 
     let appContent;
     if (getState().appLoading) {

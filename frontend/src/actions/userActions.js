@@ -44,7 +44,7 @@ export const getFeedPosts = async () => {
     try {
         [status, responseData] = await callApi(api.requestPostsFeed, request, queryParams);
     } catch(error) {
-        console.log('error');
+        output.hasError = true;
     }
 
     if (status !== 200) {

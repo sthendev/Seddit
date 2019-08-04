@@ -5,7 +5,7 @@ const UserTitle = () => {
     const el = button({
         id: 'user-title',
         classes: ['button', 'button-secondary'], 
-        text: `${getState().loggedInUser.name}`
+        text: `${getState().loggedInUser.username}`
     });
 
     return el;

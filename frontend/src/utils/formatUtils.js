@@ -34,4 +34,17 @@ export const getTimeLapsedString = (now, then) => {
 
     const years = Math.floor(difference/ONE_YEAR);
     return `${years} ${years === 1 ? 'year' : 'years'} ago`;
-} 
+}
+
+export const truncNum = (num) => {
+    if (num >= 1000000) {
+        const divided = num / 1000000;
+        return `${parseFloat(divided.toFixed(1))}mil`;
+    }
+    if (num >= 1000) {
+        const divided = num / 1000;
+        return `${parseFloat(divided.toFixed(1))}k`;
+    }
+
+    return `${num}`;
+}

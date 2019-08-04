@@ -18,7 +18,5 @@ export const getPublicPosts = async () => {
         output.data = responseData.posts;
     }
 
-    console.log('getPublicPosts: ', output);
-
     return output;
 }

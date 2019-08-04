@@ -24,3 +24,27 @@ export const login = async (payload) => {
 
     return output;
 }
+
+export const signup = async (payload) => {
+    const request = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+    };
+
+    const output = {};
+
+    const [status, responseData] = await callApi(api.requestSignup, request);
+
+    if (status !== 200) {
+        output.hasError = true;
+        output.data = responseData.message;
+    } else {
+        output.hasError = false;
+        output.data = responseData.token;
+    }
+
+    return output;
+}

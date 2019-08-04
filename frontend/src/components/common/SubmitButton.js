@@ -1,7 +1,7 @@
 import { button } from '../../utils/elements.js';
 
-const SubmitButton = ({id, text}) => {
-    const el = button({id: id, classes: ['button', 'button-secondary'], type: 'submit', text: text});
+const SubmitButton = ({text}) => {
+    const el = button({id: 'submit-button', classes: ['button', 'button-secondary'], type: 'submit', text: text});
 
     return el;
 }

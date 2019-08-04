@@ -20,7 +20,11 @@ export const element = ({tag, id, classes, text, data}, ...children) => {
     }
 
     if (children !== undefined) {
-        el.append(...children);
+        children.forEach(child => {
+            if (child) {
+                el.appendChild(child);
+            }
+        })
     }
 
     return el;
@@ -32,8 +36,8 @@ export const header = ({id, classes}, ...children) => {
     return el;
 }
 
-export const main = ({id, role}, ...children) => {
-    const el = element({tag: 'main', id: id, role: role}, ...children);
+export const main = ({id, classes, role}, ...children) => {
+    const el = element({tag: 'main', id: id, classes: classes, role: role}, ...children);
 
     if (role !== undefined) {
         el.setAttribute('role', 'main');
@@ -72,7 +76,7 @@ export const h4 = ({id, classes, text}) => {
     return el;
 }
 
-export const input = ({id, classes, placeholder, type, name, data}) => {
+export const input = ({id, classes, placeholder, type, name, data, disabled}) => {
     const el = element({tag: 'input', id: id, classes: classes, data: data});
 
     if (placeholder !== undefined) {
@@ -85,6 +89,10 @@ export const input = ({id, classes, placeholder, type, name, data}) => {
 
     if (name !== undefined) {
         el.setAttribute('name', name);
+    }
+
+    if (disabled) {
+        el.setAttribute('disabled', '');
     }
 
     return el;
@@ -112,8 +120,8 @@ export const div = ({id, classes, text, data}, ...children) => {
     return el;
 }
 
-export const form = ({id, name}, ...children) => {
-    const el = element({tag: 'form', id: id}, ...children);
+export const form = ({id, classes, name}, ...children) => {
+    const el = element({tag: 'form', id: id, classes: classes}, ...children);
 
     if (name !== undefined) {
         el.setAttribute('name', name);
@@ -122,10 +130,14 @@ export const form = ({id, name}, ...children) => {
     return el;
 }
 
-export const img = ({id, classes, src}) => {
+export const img = ({id, classes, src, imgData}) => {
     const el = element({tag: 'img', id: id, classes: classes});
 
-    if (src !== undefined) {
+    if (imgData !== undefined) {
+        el.setAttribute('src', `data:image/png;base64,${imgData}`);
+    }
+
+    if (src != undefined) {
         el.setAttribute('src', src);
     }
 
