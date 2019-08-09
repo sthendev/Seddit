@@ -219,3 +219,12 @@
   margin: auto;
 }
 
+.switch-posts {
+  margin-right: 10px;
+}
+
+#to-top-button {
+  position: fixed;
+  bottom: 20px;
+  min-width: 109px;
+}

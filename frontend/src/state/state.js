@@ -7,6 +7,7 @@ let state = {
     loginLoading: false,
     loggedInUser: null,
     postsLoading: false,
+    publicPosts: true,
     getPostsError: false,
     noMorePosts: false,
     morePostsLoading: false,

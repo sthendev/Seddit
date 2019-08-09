@@ -4,14 +4,14 @@ import Logo from './Logo.js';
 import SedditSearch from './SedditSearch.js';
 import LoginButton from './LoginButton.js';
 import SignupButton from './SignupButton.js';
-import UserTitle from './UserTitle.js'
+import UserButton from './UserButton.js'
 
 const Header = () => {
     let navItems;
     if (getState().loggedInUser) {
         navItems = [
             li({classes: ['nav-item']},
-                UserTitle()
+                UserButton()
             )
         ];
     } else {

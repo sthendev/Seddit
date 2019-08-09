@@ -1,6 +1,8 @@
 import PostButton from './PostButton.js';
 import Post from './Post.js';
 import Loader from '../loader/Loader.js';
+import SwitchPostsButton from './SwitchPostsButton.js';
+import ToTopButton from './ToTopButton.js';
 import { main, ul, div, h3, h4, img, li } from '../../utils/elements.js';
 import { getState, setState, subscribe } from '../../state/state.js';
 import { getPublicPosts } from '../../actions/postActions.js';
@@ -9,34 +11,49 @@ import { getFeedPosts } from '../../actions/userActions.js';
 const getInitialPosts = async () => {
     setState({postsLoading: true, getPostsError: false});
 
-    let response = {hasError: false, data: []};
     if (getState().loggedInUser) {
+        let response = {};
         try {
             response = await getFeedPosts();
         } catch(error) {
             response.hasError = true;
         }
-    }
-    if (response.hasError || !response.data.length) {
+
+        if (response.hasError) {
+            setState({postsLoading: false, publicPosts: false, getPostsError: true});
+        } else {
+            if (response.data.length < 10) {
+                setState({
+                    postsLoading: false,
+                    posts: [...response.data],
+                    publicPosts: false,
+                    noMorePosts: true
+                });
+            } else {
+                setState({
+                    postsLoading: false,
+                    posts: [...response.data],
+                    publicPosts: false
+                });
+            }
+            
+        }
+    } else {
+        let response = {};
         try {
             response = await getPublicPosts();
         } catch(error) {
             response.hasError = true;
         }
-    }
-    if (response.hasError) {
-        setState({postsLoading: false, getPostsError: true});
-    } else {
-        if (response.data.length < 10 || response.data.length > 10) {
-            setState({
-                postsLoading: false,
-                posts: [...response.data],
-                noMorePosts: true
-            });
+
+        if (response.hasError) {
+            setState({postsLoading: false, publicPosts: false, getPostsError: true});
         } else {
             setState({
-                postsLoading: false,
-                posts: [...response.data]
+                postsLoading: false, 
+                posts: [...response.data],
+                publicPosts: true,
+                noMorePosts: true
             });
         }
     }
@@ -67,9 +84,8 @@ const getMorePosts = async () => {
                 posts: [...getState().posts, ...response.data]
             });
         }
-        
     }
-}
+} 
 
 const Main = () => {
     const mounted = document.getElementById('main');
@@ -101,9 +117,9 @@ const Main = () => {
         )
     );
 
-    const feedTitle = getState().loggedInUser 
-        ? 'Your Feed' 
-        : 'Latest Posts';
+    const feedTitle = getState().publicPosts
+        ? 'Latest Posts' 
+        : 'Your Feed';
     const noPostsText = getState().getPostsError 
         ? 'Unable to contact the seddit gods :(' 
         : 'Nothing to see here...';
@@ -116,18 +132,25 @@ const Main = () => {
             mainContent = ul({id: 'feed', data: 'id-feed'},
                 div({classes: ['feed-header']},
                     h3({classes: ['feed-title', 'alt-text'], text: feedTitle}),
-                    PostButton()
+                    div({classes: ['post-header-buttons']},
+                        SwitchPostsButton(),
+                        PostButton()
+                    )
                 ),
                 ...posts
             );
         } else {
             mainContent = ul({id: 'feed', classes: ['no-posts'], data: 'id-feed'},
                 div({classes: ['feed-header']},
-                    h3({classes: ['feed-title', 'alt-text'], text: feedTitle})
+                    h3({classes: ['feed-title', 'alt-text'], text: feedTitle}),
+                    div({classes: ['post-header-buttons']},
+                        SwitchPostsButton(),
+                        PostButton()
+                    )
                 ),
                 div({classes: ['spider-box']},
                     img({classes: ['spider-img'], src: '/assets/spider.png'}),
-                    h4({classes: ['feed-title', 'alt-text'], text: noPostsText})
+                    h4({classes: ['feed-title', 'alt-text'], text: noPostsText}),
                 )
             );
         }
@@ -137,10 +160,32 @@ const Main = () => {
         mainContent
     );
 
+    const adjustToTopButton = () => {
+        const feedRight = document.getElementById('feed').getBoundingClientRect().right;
+        const toTopButton = document.getElementById('to-top-button');
+        !toTopButton && window.removeEventListener('resize', adjustToTopButton);
+
+        toTopButton.style.left = `${feedRight + 10}px`;
+        if (window.innerWidth < 1078) {
+            toTopButton.style.display = 'none';
+        } else {
+            toTopButton.style.display = 'block';
+        }
+    };
+
     let scrollTimeout;
     const scrollHandler = () => {
         clearTimeout(scrollTimeout);
         scrollTimeout = setTimeout(() => {
+            if (el.scrollTop > 0 ) {
+                !document.getElementById('to-top-button') &&
+                el.appendChild(ToTopButton());
+                window.addEventListener('resize', adjustToTopButton);
+            } else {
+                document.getElementById('to-top-button') &&
+                document.getElementById('to-top-button').remove();
+            }
+
             if (el.scrollHeight - el.scrollTop < 2000 
                 && getState().loggedInUser 
                 && !getState().noMorePosts

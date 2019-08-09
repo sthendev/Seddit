@@ -30,14 +30,14 @@ export const element = ({tag, id, classes, text, data}, ...children) => {
     return el;
 }
 
-export const header = ({id, classes}, ...children) => {
-    const el = element({tag: 'header', id: id, classes: classes}, ...children);
+export const header = ({id, classes, data}, ...children) => {
+    const el = element({tag: 'header', id: id, classes: classes, data: data}, ...children);
 
     return el;
 }
 
-export const main = ({id, classes, role}, ...children) => {
-    const el = element({tag: 'main', id: id, classes: classes, role: role}, ...children);
+export const main = ({id, classes, role, data}, ...children) => {
+    const el = element({tag: 'main', id: id, classes: classes, role: role, data: data}, ...children);
 
     if (role !== undefined) {
         el.setAttribute('role', 'main');
@@ -52,26 +52,26 @@ export const ul = ({id, classes, data}, ...children) => {
     return el;
 }
 
-export const li = ({id, classes}, ...children) => {
-    const el = element({tag: 'li', id: id, classes: classes}, ...children);
+export const li = ({id, classes, data}, ...children) => {
+    const el = element({tag: 'li', id: id, classes: classes, data: data}, ...children);
 
     return el;
 }
 
-export const h1 = ({id, classes, text}) => {
-    const el = element({tag: 'h1', id: id, classes: classes, text: text});
+export const h1 = ({id, classes, text, data}) => {
+    const el = element({tag: 'h1', id: id, classes: classes, text: text, data: data});
     
     return el;
 }
 
-export const h3 = ({id, classes, text}) => {
-    const el = element({tag: 'h3', id: id, classes: classes, text: text});
+export const h3 = ({id, classes, text, data}) => {
+    const el = element({tag: 'h3', id: id, classes: classes, text: text, data: data});
     
     return el;
 }
 
-export const h4 = ({id, classes, text}) => {
-    const el = element({tag: 'h4', id: id, classes: classes, text: text});
+export const h4 = ({id, classes, text, data}) => {
+    const el = element({tag: 'h4', id: id, classes: classes, text: text, data: data});
     
     return el;
 }
@@ -120,8 +120,8 @@ export const div = ({id, classes, text, data}, ...children) => {
     return el;
 }
 
-export const form = ({id, classes, name}, ...children) => {
-    const el = element({tag: 'form', id: id, classes: classes}, ...children);
+export const form = ({id, classes, name, data}, ...children) => {
+    const el = element({tag: 'form', id: id, classes: classes, data: data}, ...children);
 
     if (name !== undefined) {
         el.setAttribute('name', name);
@@ -130,8 +130,8 @@ export const form = ({id, classes, name}, ...children) => {
     return el;
 }
 
-export const img = ({id, classes, src, imgData}) => {
-    const el = element({tag: 'img', id: id, classes: classes});
+export const img = ({id, classes, src, imgData, data}) => {
+    const el = element({tag: 'img', id: id, classes: classes, data: data});
 
     if (imgData !== undefined) {
         el.setAttribute('src', `data:image/png;base64,${imgData}`);
@@ -144,8 +144,8 @@ export const img = ({id, classes, src, imgData}) => {
     return el;
 }
 
-export const hr = ({id, classes}) => {
-    const el = element({tag: 'hr', id: id, classes: classes});
+export const hr = ({id, classes, data}) => {
+    const el = element({tag: 'hr', id: id, classes: classes, data: data});
 
     return el;
 }
