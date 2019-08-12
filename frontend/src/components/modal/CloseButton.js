@@ -4,9 +4,9 @@ import { setState } from '../../state/state.js';
 const CloseButton = () => {
     const el = div({id: 'close-button', text: '\u00D7'});
 
-    el.addEventListener('click', (event) => {
+    el.addEventListener('click', () => {
         document.getElementById('modal').remove();
-        document.body.style.overflow = '';
+        document.getElementById('main').style.overflow = '';
         setState({modalOpen: false});
     });
 

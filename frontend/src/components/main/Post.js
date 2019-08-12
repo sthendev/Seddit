@@ -5,12 +5,16 @@ import TimeLapsed from './TimeLapsed.js';
 import Space from '../common/Space.js';
 import CommentButton from './CommentButton.js';
 import Voter from './Voter.js';
+import Modal from '../modal/Modal.js';
+import OpenPost from './OpenPost.js';
+import { getState, setState } from '../../state/state.js';
 
-const Post = ({index, id, text, title, meta: {author, subseddit, published, upvotes}, image, comments}) => {
+const Post = ({index, id, clickable, text, title, meta: {author, subseddit, published, upvotes}, image, comments}) => {
     const mounted = document.getElementById(`post-${id}`);
     
     const postClasses = ['post'];
     !mounted && postClasses.push('fade');
+    clickable && postClasses.push('post-clickable')
 
     const publishedTime = parseInt(published);
 
@@ -35,7 +39,7 @@ const Post = ({index, id, text, title, meta: {author, subseddit, published, upvo
             ),
             h4({
                 classes: ['post-title', 'alt-text'],
-                text: `${title}...`,
+                text: title,
                 data: 'id-title'
             }),
             p({
@@ -48,7 +52,15 @@ const Post = ({index, id, text, title, meta: {author, subseddit, published, upvo
         )
     );
 
-    
+    el.addEventListener('click', () => {
+        if (getState().modalOpen) return;
+        setState({modalOpen: true, openPostIndex: index});
+        document.getElementById('app').appendChild(Modal(OpenPost()));
+        if (document.getElementById('open-post').scrollHeight > window.innerHeight - 100) {
+            document.getElementById('modal').querySelector('#close-button').style.paddingRight = `${25}px`;
+        }
+        document.getElementById('main').style.overflow = 'hidden';
+    })
 
     return el;
 } 

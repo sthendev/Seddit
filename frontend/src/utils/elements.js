@@ -76,7 +76,7 @@ export const h4 = ({id, classes, text, data}) => {
     return el;
 }
 
-export const input = ({id, classes, placeholder, type, name, data, disabled}) => {
+export const input = ({id, classes, placeholder, type, name, value, data, disabled}) => {
     const el = element({tag: 'input', id: id, classes: classes, data: data});
 
     if (placeholder !== undefined) {
@@ -89,6 +89,32 @@ export const input = ({id, classes, placeholder, type, name, data, disabled}) =>
 
     if (name !== undefined) {
         el.setAttribute('name', name);
+    }
+
+    if (value !== undefined) {
+        el.setAttribute('value', value);
+    }
+
+    if (disabled) {
+        el.setAttribute('disabled', '');
+    }
+
+    return el;
+}
+
+export const textarea = ({id, classes, placeholder, name, value, data, disabled}) => {
+    const el = element({tag: 'textarea', id: id, classes: classes, data: data});
+
+    if (placeholder !== undefined) {
+        el.setAttribute('placeholder', placeholder);
+    }
+
+    if (name !== undefined) {
+        el.setAttribute('name', name);
+    }
+
+    if (value !== undefined) {
+        el.textContent = value;
     }
 
     if (disabled) {
@@ -146,6 +172,16 @@ export const img = ({id, classes, src, imgData, data}) => {
 
 export const hr = ({id, classes, data}) => {
     const el = element({tag: 'hr', id: id, classes: classes, data: data});
+
+    return el;
+}
+
+export const canvas = ({id, classes, name, data}) => {
+    const el = element({tag: 'canvas', id: id, classes: classes, data: data});
+
+    if (name !== undefined) {
+        el.setAttribute('name', name);
+    }
 
     return el;
 }

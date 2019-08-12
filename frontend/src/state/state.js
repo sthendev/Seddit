@@ -10,8 +10,10 @@ let state = {
     publicPosts: true,
     getPostsError: false,
     noMorePosts: false,
+    openPostIndex: null,
     morePostsLoading: false,
     morePostsError: false,
+    sendPostLoading: false,
     prevScrollTop: 0,
     posts: []
 };

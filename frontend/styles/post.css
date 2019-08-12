@@ -8,6 +8,17 @@
   border-radius: 10px;
 }
 
+#open-post {
+  margin-top: 0px;
+  width: 800px;
+  border: none;
+}
+
+.post-clickable:hover {
+  cursor: pointer;
+  border-color: #555;
+}
+
 .post .vote {
   width: 6%;
   background-color: var(--reddit-light-grey);
@@ -15,8 +26,13 @@
 }
 
 .post .content {
-  width: available;
+  box-sizing: border-box;
+  width: 94%;
   padding: 10px;
+}
+
+#open-post .content {
+  overflow-y: auto;
 }
 
 .post-title {
@@ -38,7 +54,7 @@
   position: relative;
 }
 
-.post-subseddit:hover, .post-author:hover, .time-lapsed:hover {
+.post-subseddit:hover, .author:hover, .time-lapsed:hover, .edit-link:hover {
   cursor: pointer;
   text-decoration: underline;
 }
@@ -52,11 +68,19 @@
   color: #aaa;
 }
 
-.post-author {
+.author {
   color: var(--reddit-blue);
 }
 
-.post-author:hover {
+.author:hover {
+  color: var(--reddit-blue-lighter);
+}
+
+.edit-link {
+  color: var(--reddit-blue);
+}
+
+.edit-link:hover {
   color: var(--reddit-blue-lighter);
 }
 
@@ -70,16 +94,16 @@
 
 .post-text {
   font-size: 16px;
+  overflow-wrap: break-word;
 }
 
 .tool-tip {
   position: absolute;
-  top: -30px;
-  left: 80%;
+  top: -5px;
+  left: 105%;
   z-index: 1;
   width: max-content;
-  transform: translateX(-50%);
-  
+  display: flex;
 }
 
 .time-info {
@@ -89,17 +113,17 @@
   color: white;
 }
 
-.arrow-down {
+.arrow-left {
   height: 0;
   width: 0;
-  margin: auto;
-  border-top: 5px solid #555;
-  border-left: 5px solid transparent;
-  border-right: 5px solid transparent;
+  margin: 0;
+  border-top: 5px solid transparent;
+  border-right: 5px solid black;
+  border-bottom: 5px solid transparent;
 }
 
-.tool-tip .arrow-down {
-  margin-left: 43%;
+.tool-tip .arrow-left {
+  margin-top: 7px;
 }
 
 .thumbnail {
@@ -110,7 +134,7 @@
 .post-image {
   max-width: 90%;
   display: block;
-  margin: 0 5%;;
+  margin: 0 auto;;
 }
 
 .comment-button {
@@ -119,7 +143,7 @@
   border-radius: 5px;
   padding: 5px;
   width: max-content;
-  margin-top: 16px;
+  margin: 20px 0;
 }
 
 .comment-icon {
@@ -142,22 +166,17 @@
   padding-right: 5px;
 }
 
+.arrow-down {
+  height: 0;
+  width: 0;
+  margin: auto;
+  border-top: 5px solid #555;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+}
+
 .comment-button .arrow-down {
   border-width: 3px;
-}
-
-.comment-button.hover-enabled:hover {
-  background-color: var(--reddit-light-grey);
-  cursor: pointer;
-}
-
-.comment-button {
-  display: flex;
-  align-items: center;
-  border-radius: 5px;
-  padding: 5px;
-  width: max-content;
-  margin-top: 16px;
 }
 
 .voter {
@@ -174,32 +193,32 @@
 .upvote-icon .upvote-icon-box {
   height: 12px;
   width: 6px;
-  margin: auto;
+  margin: 0 auto;
   border-radius: 0 0 3px 3px;
   background-color: #555;
 }
+
+.upvote-icon.upvoted .upvote-icon-box {
+  background-color: var(--reddit-orange);
+}
+
 .upvote-icon .arrow-up {
   height: 0;
   width: 0;
-  margin: auto;
+  margin: 0 auto;
   border-bottom: 10px solid #555;
   border-left:  10px solid transparent;
   border-right: 10px solid transparent;
+}
+
+.upvote-icon.upvoted .arrow-up {
+  border-bottom-color: var(--reddit-orange);
 }
 
 .upvote-icon.hover-enabled:hover {
   background-color: var(--reddit-light-grey);
   cursor: pointer;
 }
-
-.upvote-icon.hover-enabled:hover .arrow-up {
-  border-bottom-color: var(--reddit-orange);
-}
-
-.upvote-icon.hover-enabled:hover .upvote-icon-box {
-  background-color: var(--reddit-orange);
-}
-
 
 .voter p {
   width: 100%;
@@ -227,4 +246,78 @@
   position: fixed;
   bottom: 20px;
   min-width: 109px;
+}
+
+#comment-section {
+  margin-bottom: 20px;
+}
+
+.comment-text {
+  width: available;
+  margin-left: 10px;
+  border-left: 1px solid #555;
+  padding-left: 10px;
+  font-size: 14px;
+}
+
+.space-bottom {
+  height: 30px;
+}
+
+#upvoters {
+  display: flex;
+  width: 100%;
+}
+
+#upvoters p {
+  font-size: 12px;
+}
+
+.upvoters-list {
+  display: flex;
+  overflow-x: auto;
+}
+
+.upvoters-list .author {
+  margin-left: 5px;
+}
+
+#open-post .comment-button {
+  margin-top: 0;
+}
+
+.upvoters-label {
+  color: #999;
+}
+
+#comment-box {
+  position: relative;
+  width: 717px;
+}
+
+#comment-box .text-input {
+  display: block;
+  width: 100%;
+}
+
+#comment-box textarea {
+  margin-bottom: 5px;
+  width: 690px;
+  height: 50px;
+  resize: none;
+  text-align: left;
+}
+
+#comment-box #submit-button {
+  position: absolute;
+  width: max-content;
+  left: 100%;
+  bottom: -35px;
+  transform: translateX(-100%);
+  margin: 0;
+}
+
+#comment-box .error {
+  bottom: none;
+  top: -8px;
 }

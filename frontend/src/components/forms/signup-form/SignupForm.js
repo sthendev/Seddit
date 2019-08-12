@@ -1,8 +1,9 @@
-import { form, input, h3, div } from '../../../utils/elements.js';
+import { form, h3, div } from '../../../utils/elements.js';
 import { signup } from '../../../actions/authActions.js';
 import { saveToken } from '../../../api/initApi.js';
 import { getState, setState, subscribe } from '../../../state/state.js';
 import * as validation from '../../../utils/validation.js';
+import delay from '../../../utils/delay.js';
 import TextBoxInput from '../../common/TextBoxInput.js';
 import SubmitButton from '../../common/SubmitButton.js';
 import Loader from '../../loader/Loader.js';
@@ -26,8 +27,10 @@ const performSignup = async () => {
 
     let response = {};
     try {
+        getState().extendLoaders && await delay(800);
         response = await signup(payload);
-    } catch {
+    } catch(error) {
+        console.error(error);
         response.hasError = true;
     }
     
@@ -38,8 +41,6 @@ const performSignup = async () => {
         }
     } else {
         saveToken(response.data);
-        document.getElementById('modal').remove();
-        document.body.style.overflow = '';
         location.reload();
     }
 }

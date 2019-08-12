@@ -2,13 +2,16 @@ import { button } from '../../utils/elements.js';
 import { getState, setState } from '../../state/state.js';
 import { getPublicPosts } from '../../actions/postActions.js';
 import { getFeedPosts } from '../../actions/userActions.js';
+import delay from '../../utils/delay.js';
 
 const switchPublicPosts = async () => {
     setState({postsLoading: true, getPostsError: false});
     let response = {};
     try {
+        getState().extendLoaders && await delay(800);
         response = await getPublicPosts();
     } catch(error) {
+        console.error(error);
         response.hasError = true;
     }
 
@@ -29,8 +32,10 @@ const switchFeedPosts = async () => {
 
     let response = {};
     try {
-        response = await getFeedPosts();
+        getState().extendLoaders && await delay(800);
+        response = await getFeedPosts(true);
     } catch(error) {
+        console.error(error);
         response.hasError = true;
     }
 
@@ -47,7 +52,9 @@ const switchFeedPosts = async () => {
         } else {
             setState({
                 postsLoading: false,
-                posts: [...response.data]
+                posts: [...response.data],
+                publicPosts: false,
+                noMorePosts: false
             });
         }
         

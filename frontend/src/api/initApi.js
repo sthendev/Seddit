@@ -8,7 +8,7 @@ const initApi = (apiUrl) => {
     TOKEN = localStorage.getItem('Token') 
         ? localStorage.getItem('Token')
         : "";
-    setState({extendLoaders: false});
+    setState({extendLoaders: true});
 }
 
 export const saveToken = (token) => {

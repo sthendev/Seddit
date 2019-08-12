@@ -1,10 +1,9 @@
-import { div, input, p } from '../../utils/elements.js';
+import { div, textarea } from '../../utils/elements.js';
 
-const TextBoxInput = ({id, placeholder, label, type, name, value, preText, disabled, validation, additionalOnBlur}) => {
-    const textInput = input({
+const TextAreaInput = ({id, placeholder, label, name, value, disabled, validation, additionalOnBlur}) => {
+    const textInput = textarea({
         id: id,
         placeholder: placeholder,
-        type: type,
         name: name,
         disabled: disabled,
         value: value
@@ -15,15 +14,11 @@ const TextBoxInput = ({id, placeholder, label, type, name, value, preText, disab
         div({
             classes: ['label'],
             text: label
-        }),
-        p({
-            classes: ['pre-text'],
-            text: preText
         })
     );
 
     textInput.addEventListener('blur', () => {
-        if (type !== 'password') textInput.value = textInput.value.trim();
+        textInput.value = textInput.value.trim();
 
         let validationError = "";
 
@@ -65,4 +60,4 @@ const TextBoxInput = ({id, placeholder, label, type, name, value, preText, disab
     return el;
 }
 
-export default TextBoxInput;
+export default TextAreaInput;

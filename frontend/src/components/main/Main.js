@@ -2,7 +2,7 @@ import PostButton from './PostButton.js';
 import Post from './Post.js';
 import Loader from '../loader/Loader.js';
 import SwitchPostsButton from './SwitchPostsButton.js';
-import ToTopButton from './ToTopButton.js';
+import delay from '../../utils/delay.js';
 import { main, ul, div, h3, h4, img, li } from '../../utils/elements.js';
 import { getState, setState, subscribe } from '../../state/state.js';
 import { getPublicPosts } from '../../actions/postActions.js';
@@ -14,8 +14,10 @@ const getInitialPosts = async () => {
     if (getState().loggedInUser) {
         let response = {};
         try {
+            getState().extendLoaders && await delay(800);
             response = await getFeedPosts();
         } catch(error) {
+            console.error(error);
             response.hasError = true;
         }
 
@@ -33,7 +35,8 @@ const getInitialPosts = async () => {
                 setState({
                     postsLoading: false,
                     posts: [...response.data],
-                    publicPosts: false
+                    publicPosts: false,
+                    noMorePosts: false
                 });
             }
             
@@ -41,8 +44,10 @@ const getInitialPosts = async () => {
     } else {
         let response = {};
         try {
+            getState().extendLoaders && await delay(800);
             response = await getPublicPosts();
         } catch(error) {
+            console.error(error);
             response.hasError = true;
         }
 
@@ -64,8 +69,10 @@ const getMorePosts = async () => {
 
     let response = {};
     try {
+        getState().extendLoaders && await delay(800);
         response = await getFeedPosts();
     } catch(error) {
+        console.error(error);
         response.hasError = true;
     }
 
@@ -96,7 +103,7 @@ const Main = () => {
     !mounted && mainClasses.push('fade');
 
     const posts = getState().posts.map((post, index) => {
-        return Post({index: index, ...post});
+        return Post({index: index, clickable: true, ...post});
     });
 
     getState().morePostsLoading && posts.push(
@@ -160,39 +167,19 @@ const Main = () => {
         mainContent
     );
 
-    const adjustToTopButton = () => {
-        const feedRight = document.getElementById('feed').getBoundingClientRect().right;
-        const toTopButton = document.getElementById('to-top-button');
-        !toTopButton && window.removeEventListener('resize', adjustToTopButton);
-
-        toTopButton.style.left = `${feedRight + 10}px`;
-        if (window.innerWidth < 1078) {
-            toTopButton.style.display = 'none';
-        } else {
-            toTopButton.style.display = 'block';
-        }
-    };
-
     let scrollTimeout;
     const scrollHandler = () => {
         clearTimeout(scrollTimeout);
         scrollTimeout = setTimeout(() => {
-            if (el.scrollTop > 0 ) {
-                !document.getElementById('to-top-button') &&
-                el.appendChild(ToTopButton());
-                window.addEventListener('resize', adjustToTopButton);
-            } else {
-                document.getElementById('to-top-button') &&
-                document.getElementById('to-top-button').remove();
-            }
+            const main = document.getElementById('main');
 
-            if (el.scrollHeight - el.scrollTop < 2000 
+            if (main.scrollHeight - main.scrollTop < 2000 
                 && getState().loggedInUser 
                 && !getState().noMorePosts
                 && !getState().morePostsLoading
                 && !getState().morePostsError) {
                 getMorePosts();
-                el.removeEventListener('scroll', scrollHandler);
+                main.removeEventListener('scroll', scrollHandler);
             }
         }, 200);
     }

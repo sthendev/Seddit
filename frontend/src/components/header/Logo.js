@@ -7,6 +7,10 @@ const Logo = () => {
         text: 'Seddit'
     });
 
+    el.addEventListener('click', () => {
+        document.getElementById('main').scrollTo({top: 0, behavior: 'smooth'});
+    })
+
     return el;
 }
 

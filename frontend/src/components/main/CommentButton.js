@@ -3,10 +3,7 @@ import { truncNum } from '../../utils/formatUtils.js';
 import { getState } from '../../state/state.js';
 
 const CommentButton = (numComments) => {
-    const commentClasses = ['comment-button'];
-    getState().loggedInUser && commentClasses.push('hover-enabled');
-
-    const el = div({classes: commentClasses},
+    const el = div({classes: ['comment-button']},
         div({classes: ['comment-icon']},
             div({classes: ['comment-icon-box']}),
             div({classes: ['arrow-down']})

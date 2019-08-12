@@ -5,8 +5,8 @@ const USER_FEED_URL = '/user/feed';
 const USER_FOLLOW_URL = '/user/follow';
 const USER_UNFOLLOW_URL = '/user/unfollow';
 
-export const requestUser = (request) => {
-    return fetch(API_URL + USER_URL, request);
+export const requestUser = (request, queryString) => {
+    return fetch(API_URL + USER_URL + queryString, request);
 }
 
 export const requestPostsFeed = (request, queryString) => {

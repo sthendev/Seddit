@@ -57,6 +57,10 @@ header {
   border-radius: 50%;
 }
 
+#logo:hover {
+  cursor: pointer;
+}
+
 #search {
   background-color: var(--reddit-bg-color);
   font: inherit;
@@ -157,7 +161,7 @@ main {
   overflow: scroll;
 }
 
-input {
+input, textarea {
   background-color: var(--reddit-bg-color);
   font: inherit;
   font-size: var(--body-text-size);
@@ -168,17 +172,17 @@ input {
   border-radius: 4px;
 }
 
-input::placeholder {
+input::placeholder, textarea::placeholder {
   letter-spacing: 0.5px;
   font-size: var(--body-text-size);
 }
 
-input:focus {
+input:focus, textarea:focus {
   background-color: white;
   border-color: var(--reddit-blue);
 }
 
-input:disabled {
+input:disabled, textarea:disabled {
   background-color: var(--disabled-input);
   cursor: not-allowed;
 }
@@ -203,8 +207,12 @@ input:disabled {
   text-transform: none;
 }
 
+.flex {
+  display: flex;
+}
+
 .fade {
-  animation: fadeIn 0.5s;
+  animation: fadeIn 0.3s;
 }
 
 @keyframes fadeIn {

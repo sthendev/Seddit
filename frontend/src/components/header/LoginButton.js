@@ -12,10 +12,9 @@ const LoginButton = () => {
 
     el.addEventListener('click', () => {
         if (getState().modalOpen) return;
-        document.getElementById('app').appendChild(Modal(LoginForm()));
-        document.body.style.overflow = 'hidden';
         setState({modalOpen: true});
-
+        document.getElementById('app').appendChild(Modal(LoginForm()));
+        document.getElementById('main').style.overflow = 'hidden';
     });
 
     return el;
