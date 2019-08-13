@@ -1,2 +1,4 @@
-25/07/19     18:00   18:15   put the first real entry in diary.txt (delete this line!)
+Date        Start   Stop    Activity    Comments
+05/08/19    17:10   21:00   coding      convert provided html into javascript and construct file 
+06/08/19    16:00   18:00   coding      Level 0 completed, aslo began setting up 'React-Redux-like' webpage updating
 

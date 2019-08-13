@@ -56,7 +56,6 @@ const rerender = (elId) => {
 }
 
 export const setState = (newState) => {
-    console.log('newState: ', newState);
     const changed = Object.keys(newState).filter(key => newState[key] !== state[key]);
     state = {
         ...state,
@@ -82,11 +81,9 @@ export const setState = (newState) => {
             }
         })
         return keep;
-    })
-    console.log('minToUpdate: ', minToUpdate);
+    });
 
     minToUpdate.forEach(elId => rerender(elId));
-    console.log(state);
 }
 
 export const subscribe = (id, renderer, dependencies, retainProperties) => {

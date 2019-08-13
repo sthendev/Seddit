@@ -63,3 +63,7 @@
 .user-posts .post-title {
     text-align: left;
 }
+
+#logout {
+    margin-left: 20px;
+}

@@ -4,6 +4,7 @@ import UserList from './UserList.js';
 import PostSummary from './PostSummary.js';
 import FollowButton from './FollowButton.js';
 import EditProfileButton from './EditProfileButtion.js';
+import LogoutButton from './LogoutButton.js';
 import { getUser, getUsernameFromId } from '../../actions/userActions.js';
 import { getPostFromId } from '../../actions/postActions.js';
 import delay from '../../utils/delay.js';
@@ -103,7 +104,8 @@ const UserPage = () => {
             }),
             div({classes: ['center-content']},
                 FollowButton(),
-                EditProfileButton()
+                EditProfileButton(),
+                LogoutButton()
             ),
             div({classes: ['stats']},
                 div({classes: ['stat-box']},
