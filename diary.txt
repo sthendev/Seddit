@@ -1,4 +1,101 @@
-Date        Start   Stop    Activity    Comments
-05/08/19    17:10   21:00   coding      convert provided html into javascript and construct file 
-06/08/19    16:00   18:00   coding      Level 0 completed, aslo began setting up 'React-Redux-like' webpage updating
+commit 7814e7d1fb88e61693a84d7b0c6287765992496e
+Author: sthen <sanju.t2899@gmail.com>
+Date:   Tue Aug 13 21:40:51 2019 +1000
 
+    cleanup + logout button
+
+commit 0799f81fa46514d13b94a764a7d8fc4aeb5cb9fa
+Merge: 6c7e087 b8c3db7
+Author: sthen <sanju.t2899@gmail.com>
+Date:   Tue Aug 13 20:51:10 2019 +1000
+
+    Merge branch 'master' of https://github.com/COMP2041UNSW/seddit
+
+commit 6c7e087da60321c78345272e07e66d60085eb720
+Author: sthen <sanju.t2899@gmail.com>
+Date:   Tue Aug 13 20:49:34 2019 +1000
+
+    don't remove search
+
+commit f0449db146f6c2c8d0d3d3b6ea4c5948efebaf81
+Author: sthen <sanju.t2899@gmail.com>
+Date:   Tue Aug 13 20:40:57 2019 +1000
+
+    milestone 3
+
+commit d0bb1c9a35a20b5160b794d50008fa4e7cb8dcc2
+Author: sthen <sanju.t2899@gmail.com>
+Date:   Tue Aug 13 00:00:01 2019 +1000
+
+    edits done lots of cleanup done also
+
+commit b3f32a79681da7e85e65b11ef33c6dc1dc1ce29b
+Merge: b5eb941 cb8be82
+Author: sthen <sanju.t2899@gmail.com>
+Date:   Fri Aug 9 21:55:00 2019 +1000
+
+    Merge branch 'master' of https://github.com/COMP2041UNSW/seddit
+
+commit b5eb941182b36003740609f12f8d1724b682565e
+Author: sthen <sanju.t2899@gmail.com>
+Date:   Fri Aug 9 21:54:38 2019 +1000
+
+    updating starting files
+
+commit 72dab08818a80cb0de03709958234e3b91f0160b
+Merge: b58b8af f39815b
+Author: sthen <sanju.t2899@gmail.com>
+Date:   Sun Aug 4 20:21:04 2019 +1000
+
+    Merge branch 'master' of https://github.com/COMP2041UNSW/seddit
+
+commit b58b8af72e25fd99454845c3679575651963787f
+Author: sthen <sanju.t2899@gmail.com>
+Date:   Sun Aug 4 20:19:28 2019 +1000
+
+    signup done, form validation added and posts enhanced
+
+commit 08123139f523a3de0127ea0b1edb7fd226bc248b
+Merge: fac6636 f4c7b86
+Author: sthen <sanju.t2899@gmail.com>
+Date:   Fri Aug 2 20:50:00 2019 +1000
+
+    Merge branch 'master' of https://github.com/COMP2041UNSW/seddit
+
+commit fac6636891990d38de2d9b3d3d3b968dfe94d9d2
+Author: sthen <sanju.t2899@gmail.com>
+Date:   Fri Aug 2 20:49:28 2019 +1000
+
+    fetching posts from api
+
+commit 5442c74205791c8e9a5548d8070855cf1a9e595c
+Merge: 13a1a47 b82b06e
+Author: sthen <sanju.t2899@gmail.com>
+Date:   Tue Jul 30 17:42:46 2019 +1000
+
+    Merge branch 'master' of https://github.com/COMP2041UNSW/seddit
+
+commit 13a1a47acf7671663438a50c75a27ac02d56a0f6
+Author: sthen <sanju.t2899@gmail.com>
+Date:   Tue Jul 30 17:40:59 2019 +1000
+
+    modal component completed
+
+commit 8f995dcf1de32fea207bbe3d5dbff42cf408e1f3
+Author: sthen <sanju.t2899@gmail.com>
+Date:   Mon Jul 29 20:52:25 2019 +1000
+
+    address conflicts
+
+commit 8557b27b2bf6cd447f84aae7f73ab7e5268d0d95
+Merge: 58ac894 f30f216
+Author: sthen <sanju.t2899@gmail.com>
+Date:   Mon Jul 29 20:50:40 2019 +1000
+
+    pulled in most recent changes to starting data
+
+commit 58ac8944e9c670f3fd6d5966e9e25a28ca7f1941
+Author: sthen <sanju.t2899@gmail.com>
+Date:   Mon Jul 29 20:45:10 2019 +1000
+
+    imitation of starting html in js completed
