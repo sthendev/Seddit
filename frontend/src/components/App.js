@@ -5,7 +5,7 @@ import delay from '../utils/delay.js';
 import { div } from '../utils/elements.js';
 import { getState, setState, subscribe } from '../state/state.js';
 import { TOKEN } from '../api/initApi.js';
-import { getLoggedInUser } from '../actions/userActions.js';
+import { getLoggedInUsername } from '../actions/userActions.js';
 
 const getUserFromToken = async () => {
     setState({appLoading: true});
@@ -18,7 +18,7 @@ const getUserFromToken = async () => {
     let response = {};
     try {
         getState().extendLoaders && await delay(800);
-        response = await getLoggedInUser();
+        response = await getLoggedInUsername();
     } catch(error) {
         console.error(error);
         response.hasError = true;
@@ -30,7 +30,7 @@ const getUserFromToken = async () => {
     } else {
         setState({
             appLoading: false,
-            loggedInUser: response.data
+            loggedInUsername: response.data
         });
     }
 }
@@ -59,6 +59,6 @@ const App = () => {
     return el;
 }
 
-subscribe('app', App, ['appLoading', 'loggedInUser']);
+subscribe('app', App, ['appLoading']);
 
 export default App;

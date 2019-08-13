@@ -1,10 +1,10 @@
 import { button } from '../../utils/elements.js';
-import Modal from '../modal/Modal.js';
+import { openModal } from '../modal/Modal.js';
 import PostForm from '../forms/post-form/PostForm.js';
-import { getState, setState } from '../../state/state.js';
+import { getState } from '../../state/state.js';
 
 const PostButton = () => {
-    if (!getState().loggedInUser) return null;
+    if (!getState().loggedInUsername || getState().searchResults) return null;
 
     const el = button({
         classes: ['button', 'button-secondary'],
@@ -13,13 +13,7 @@ const PostButton = () => {
 
     el.addEventListener('click', () => {
         if (getState().modalOpen) return;
-        setState({modalOpen: true});
-        document.getElementById('app').appendChild(Modal(PostForm()));
-        const postForm = document.getElementById('post-form');
-        if (postForm.scrollHeight > window.innerHeight - 100) {
-            document.getElementById('modal').querySelector('#close-button').style.paddingRight = `${25}px`;
-        }
-        document.getElementById('main').style.overflow = 'hidden';
+        openModal(PostForm);
     });
 
     return el;

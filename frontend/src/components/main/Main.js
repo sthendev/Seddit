@@ -11,7 +11,7 @@ import { getFeedPosts } from '../../actions/userActions.js';
 const getInitialPosts = async () => {
     setState({postsLoading: true, getPostsError: false});
 
-    if (getState().loggedInUser) {
+    if (getState().loggedInUsername) {
         let response = {};
         try {
             getState().extendLoaders && await delay(800);
@@ -103,7 +103,7 @@ const Main = () => {
     !mounted && mainClasses.push('fade');
 
     const posts = getState().posts.map((post, index) => {
-        return Post({index: index, clickable: true, ...post});
+        return Post({index: index, clickable: !!getState().loggedInUsername, ...post});
     });
 
     getState().morePostsLoading && posts.push(
@@ -124,9 +124,12 @@ const Main = () => {
         )
     );
 
-    const feedTitle = getState().publicPosts
-        ? 'Latest Posts' 
-        : 'Your Feed';
+    let feedTitle = 'Your Feed';
+    if (getState().publicPosts) {
+        feedTitle = 'Latest Posts';
+    } else if (getState().searchResults) {
+        feedTitle = 'Search Results';
+    }
     const noPostsText = getState().getPostsError 
         ? 'Unable to contact the seddit gods :(' 
         : 'Nothing to see here...';
@@ -174,7 +177,7 @@ const Main = () => {
             const main = document.getElementById('main');
 
             if (main.scrollHeight - main.scrollTop < 2000 
-                && getState().loggedInUser 
+                && getState().loggedInUsername
                 && !getState().noMorePosts
                 && !getState().morePostsLoading
                 && !getState().morePostsError) {
@@ -188,6 +191,6 @@ const Main = () => {
     return el;
 }
 
-subscribe('main', Main, ['postsLoading', 'posts', 'getPostsError', 'loggedInUser', 'morePostsLoading'], ['scrollTop']);
+subscribe('main', Main, ['postsLoading', 'posts', 'getPostsError', 'morePostsLoading'], ['scrollTop', 'style.overflow']);
 
 export default Main;

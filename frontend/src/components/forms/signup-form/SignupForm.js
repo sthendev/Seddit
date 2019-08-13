@@ -1,5 +1,6 @@
 import { form, h3, div } from '../../../utils/elements.js';
 import { signup } from '../../../actions/authActions.js';
+import { editProfile } from '../../../actions/userActions.js';
 import { saveToken } from '../../../api/initApi.js';
 import { getState, setState, subscribe } from '../../../state/state.js';
 import * as validation from '../../../utils/validation.js';
@@ -7,6 +8,7 @@ import delay from '../../../utils/delay.js';
 import TextBoxInput from '../../common/TextBoxInput.js';
 import SubmitButton from '../../common/SubmitButton.js';
 import Loader from '../../loader/Loader.js';
+import { closeModal } from '../../modal/Modal.js';
 
 const performSignup = async () => {
     const form = document.signupForm;
@@ -45,13 +47,37 @@ const performSignup = async () => {
     }
 }
 
-const SignupForm = () => {
+const updateProfile = async () => {
+    const form = document.signupForm;
+
+    const inputs = Array.from(form.getElementsByTagName('input'));
+    inputs.forEach(input => input.dispatchEvent(new Event('blur')))
+
+    if (form.querySelector('.error')) return;
+
+    const payload = {
+        password: form.password.value,
+        email: form.email.value,
+        name: form.name.value
+    }
+    
+    setState({loginLoading: true});
+    await editProfile(payload);
+    setState({loginLoading: false});
+    setState({openUsername: null, userDetails: null});
+    closeModal();
+}
+
+
+const SignupForm = (isEdit) => {
     let bottomContent;
     if (getState().loginLoading) {
         bottomContent = Loader();
     } else {
         bottomContent = SubmitButton({text: 'Sign Up'});
     }
+
+    const userDetails = getState().userDetails;
 
     const el = form({id: 'signup-form', name: 'signupForm'},
         div({classes: ['center-content']},
@@ -63,12 +89,14 @@ const SignupForm = () => {
                 placeholder: 'username',
                 type: 'text',
                 name: 'username',
-                disabled: getState().loginLoading,
+                disabled: getState().loginLoading || isEdit,
                 validation: [
                     validation.required,
                     validation.allowedCharacters,
                     validation.minLength(3),
-                    validation.maxLength(20)]
+                    validation.maxLength(20)
+                ],
+                value: isEdit ? userDetails.username : ""
             })
         ),
         div({classes: ['center-content']},
@@ -103,7 +131,8 @@ const SignupForm = () => {
                 type: 'text',
                 name: 'email',
                 disabled: getState().loginLoading,
-                validation: [validation.email]
+                validation: [validation.email],
+                value: isEdit ? userDetails.email : ""
             })
         ),
         div({classes: ['center-content']},
@@ -114,7 +143,8 @@ const SignupForm = () => {
                 type: 'text',
                 name: 'name',
                 disabled: getState().loginLoading,
-                validation: [validation.name]
+                validation: [validation.name],
+                value: isEdit ? userDetails.name : ""
             })
         ),
         div({classes: ['center-content']},
@@ -131,7 +161,11 @@ const SignupForm = () => {
 
     el.addEventListener('submit', (event) => {
         event.preventDefault();
-        performSignup();
+        if (isEdit) {
+            updateProfile();
+        } else {
+            performSignup();
+        }
     });
 
     return el;

@@ -85,8 +85,6 @@ const LoginForm = () => {
         )
     );
 
-
-
     el.addEventListener('submit', (event) => {
         event.preventDefault();
         performLogin();

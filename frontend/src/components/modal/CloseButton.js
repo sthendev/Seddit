@@ -1,13 +1,11 @@
 import { div } from '../../utils/elements.js';
-import { setState } from '../../state/state.js';
+import { closeModal } from '../modal/Modal.js';
 
 const CloseButton = () => {
     const el = div({id: 'close-button', text: '\u00D7'});
 
     el.addEventListener('click', () => {
-        document.getElementById('modal').remove();
-        document.getElementById('main').style.overflow = '';
-        setState({modalOpen: false});
+        closeModal();
     });
 
     return el;

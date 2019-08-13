@@ -12,3 +12,11 @@ export const requestUser = (request, queryString) => {
 export const requestPostsFeed = (request, queryString) => {
     return fetch(API_URL + USER_FEED_URL + queryString, request);
 }
+
+export const requestFollow = (request, queryString) => {
+    return fetch(API_URL + USER_FOLLOW_URL + queryString, request);
+}
+
+export const requestUnfollow= (request, queryString) => {
+    return fetch(API_URL + USER_UNFOLLOW_URL + queryString, request);
+}

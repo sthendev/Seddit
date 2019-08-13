@@ -8,6 +8,7 @@ import TextAreaInput from '../../common/TextAreaInput.js';
 import ImageInput from '../../common/ImageInput.js';
 import SubmitButton from '../../common/SubmitButton.js';
 import Loader from '../../loader/Loader.js';
+import { closeModal } from '../../modal/Modal.js';
 
 const convertToBase64 = (file) => new Promise((resolve) => {
     let imgData = '';
@@ -59,13 +60,30 @@ const sendPost = async () => {
             document.postForm.querySelector('#submit-error').textContent = response.data;
         }
     } else {
-        document.getElementById('modal').remove();
-        document.getElementById('main').style.overflow = '';
-        setState({sendPostLoading: false, modalOpen: false});
+        const updatedState = {sendPostLoading: false};
+        if (getState().publicPosts) {
+            const newPost = {
+                id: response.data,
+                title: payload.title,
+                text: payload.text,
+                image: payload.image,
+                comments: [],
+                meta: {
+                    author: getState().loggedInUsername,
+                    published: new Date().getTime()/1000,
+                    subseddit: payload.subseddit,
+                    upvotes: []
+                }
+            };
+
+            updatedState.posts = [newPost, ...getState().posts];
+        }
+        setState(updatedState);
+        closeModal();
     }
 }
 
-const updatePost = async (index) => {
+const updatePost = async () => {
     const form = document.postForm;
 
     const inputs = Array.from(form.querySelectorAll('input, textarea'));
@@ -89,7 +107,7 @@ const updatePost = async (index) => {
     let response = {};
     try {
         getState().extendLoaders && await delay(800);
-        response = await update(payload, getState().posts[index].id);
+        response = await update(payload, getState().openPostId);
     } catch(error) {
         console.error(error);
         response.hasError = true;
@@ -101,14 +119,21 @@ const updatePost = async (index) => {
             document.postForm.querySelector('#submit-error').textContent = response.data;
         }
     } else {
-        document.getElementById('modal').remove();
-        document.getElementById('main').style.overflow = '';
-        setState({sendPostLoading: false, modalOpen: false});
+        const updatedPostDetails = {...getState().postDetails, ...payload};
+        const updatedPosts = [...getState().posts];
+        const inPostsIndex = updatedPosts.findIndex(post => post.id === getState().openPostId);
+        if (inPostsIndex >= 0) {
+            updatedPosts[inPostsIndex] = {...updatedPosts[inPostsIndex], ...payload};
+            setState({sendPostLoading: false, posts: updatedPosts, postDetails: updatedPostDetails, openPostId: null});
+        } else {
+            setState({sendPostLoading: false, postDetails: updatedPostDetails, openPostId: null});
+        }
+        closeModal();
     }
 }
 
-const PostForm = (editIndex) => {
-    const isEdit = editIndex !== undefined;
+const PostForm = (isEdit) => {
+    const {title, text} = isEdit ? getState().postDetails : {title: "", text: ""};
 
     let bottomContent;
     if (getState().sendPostLoading) {
@@ -149,7 +174,7 @@ const PostForm = (editIndex) => {
                     validation.required,
                     validation.maxLength(50)
                 ],
-                value: isEdit ? getState().posts[editIndex].title : ""
+                value: title
             })
         ),
         div({classes: ['center-content']},
@@ -159,7 +184,7 @@ const PostForm = (editIndex) => {
                 name: 'text',
                 disabled: getState().sendPostLoading,
                 validation: [validation.required],
-                value: isEdit ? getState().posts[editIndex].text : ""
+                value: text
             })
         ),
         subsedditInput,
@@ -184,7 +209,7 @@ const PostForm = (editIndex) => {
     el.addEventListener('submit', (event) => {
         event.preventDefault();
         if (isEdit) {
-            updatePost(editIndex);
+            updatePost();
         } else {
             sendPost();
         }

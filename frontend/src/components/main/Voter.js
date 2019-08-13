@@ -1,16 +1,15 @@
 import { div, p } from '../../utils/elements.js';
 import { truncNum } from '../../utils/formatUtils.js';
 import { getState, setState } from '../../state/state.js';
-import { get } from '../../utils/objectUtils.js';
 import { upvote } from '../../actions/postActions.js';
 
 const Voter = (postIndex, numUpvotes) => {
     const postDetails = getState().posts[postIndex].meta;
-    const loggedInUsername = get('username', getState().loggedInUser);
+    const loggedInUsername = getState().loggedInUsername;
 
     const upvoteClasses = ['upvote-icon'];
 
-    getState().loggedInUser &&
+    loggedInUsername &&
     postDetails.author !== loggedInUsername &&
     upvoteClasses.push('hover-enabled');
 
@@ -33,7 +32,7 @@ const Voter = (postIndex, numUpvotes) => {
     upvoteIcon.addEventListener('click', (event) => {
         event.stopPropagation();
         const postDetails = getState().posts[postIndex].meta;
-        const loggedInUsername = get('username', getState().loggedInUser);
+        const loggedInUsername = getState().loggedInUsername;
 
         if (!loggedInUsername
             || postDetails.author === loggedInUsername) {

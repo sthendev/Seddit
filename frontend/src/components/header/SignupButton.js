@@ -1,5 +1,5 @@
 import { button } from '../../utils/elements.js';
-import Modal from '../modal/Modal.js';
+import { openModal } from '../modal/Modal.js';
 import SignupForm from '../forms/signup-form/SignupForm.js';
 import { getState, setState } from '../../state/state.js';
 
@@ -12,9 +12,7 @@ const SignupButton = () => {
 
     el.addEventListener('click', () => {
         if (getState().modalOpen) return;
-        setState({modalOpen: true});
-        document.getElementById('app').appendChild(Modal(SignupForm()));
-        document.getElementById('main').style.overflow = 'hidden';
+        openModal(SignupForm);
     });
 
     return el;

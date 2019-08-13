@@ -8,7 +8,7 @@ import UserButton from './UserButton.js'
 
 const Header = () => {
     let navItems;
-    if (getState().loggedInUser) {
+    if (getState().loggedInUsername) {
         navItems = [
             li({classes: ['nav-item']},
                 UserButton()

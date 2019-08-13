@@ -1,16 +1,16 @@
 import { div, h4, p, img } from '../../utils/elements.js';
 import SubLink from './SubLink.js';
 import Space from '../common/Space.js';
-import UserLink from './UserLink.js';
+import UserLink from '../user/UserLink.js';
 import EditLink from './EditLink.js';
+import DeleteLink from './DeleteLink.js';
 import TimeLapsed from './TimeLapsed.js';
-import UpvotersList from './UpvotersList.js';
+import UserList from '../user/UserList.js';
 import CommentSection from './CommentSection.js';
 import { getState, subscribe } from '../../state/state.js';
 
 const OpenPostContent = () => {
-    const index = getState().openPostIndex;
-    const {text, title, meta: {author, subseddit, published, upvotes}, image, comments} = getState().posts[index];
+    const {text, title, meta: {author, subseddit, published, upvotes}, image, comments} = getState().postDetails;
 
     const publishedTime = parseInt(published);
 
@@ -29,7 +29,9 @@ const OpenPostContent = () => {
             Space(),
             TimeLapsed(publishedTime),
             Space(),
-            EditLink(index)
+            EditLink(),
+            Space(),
+            DeleteLink()
         ),
         h4({
             classes: ['post-title', 'alt-text'],
@@ -42,13 +44,13 @@ const OpenPostContent = () => {
             data: 'id-text'
         }),
         postImage,
-        UpvotersList(upvotes),
+        UserList(upvotes, 'upvoters'),
         CommentSection(comments)
     )
     
     return el;
 }
 
-subscribe('open-post-content', OpenPostContent, ['posts'], ['scrollTop']);
+subscribe('open-post-content', OpenPostContent, ['postDetails'], ['scrollTop']);
 
 export default OpenPostContent;

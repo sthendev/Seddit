@@ -6,7 +6,7 @@ import { getState, setState } from '../../../state/state.js';
 import { comment } from '../../../actions/postActions.js';
 
 const CommentBox = () => {
-    if (!getState().loggedInUser) return null;
+    if (!getState().loggedInUsername) return null;
 
     const el = form({id: 'comment-box', name: 'commentBox'},
         TextAreaInput({
@@ -28,18 +28,30 @@ const CommentBox = () => {
         form.commentText.dispatchEvent(new Event('blur'));
 
         if (form.querySelector('.error')) return;
-        
-        const postIndex = getState().openPostIndex;
         const commentText = form.commentText.value;
-        
-        const updatedPosts = [...getState().posts];
-        updatedPosts[postIndex].comments.splice(0, 0, {
-            author: getState().loggedInUser.username,
+
+        const updatedPostDetails = {...getState().postDetails};
+        updatedPostDetails.comments.splice(0, 0, {
+            author: getState().loggedInUsername,
             comment: commentText,
-            published: new Date().getTime()
+            published: new Date().getTime()/1000
         });
-        comment(commentText, getState().posts[postIndex].id);
-        setState({posts: updatedPosts});
+
+        const updatedPosts = [...getState().posts];
+        const inPostsIndex = updatedPosts.findIndex(post => post.id === getState().openPostId);
+        if (inPostsIndex >= 0) {
+            updatedPosts[inPostsIndex].comments.splice(0, 0, {
+                author: getState().loggedInUsername,
+                comment: commentText,
+                published: new Date().getTime()/1000
+            });
+            setState({posts: updatedPosts, postDetails: updatedPostDetails});
+        } else {
+            setState({postDetails: updatedPostDetails});
+        }
+        comment(commentText, getState().openPostId);
+        const openPostContent = document.getElementById('open-post-content');
+        openPostContent.scrollTo({top: openPostContent.scrollHeight, behavior: 'smooth'});
     })
 
     return el;

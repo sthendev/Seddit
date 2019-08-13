@@ -32,7 +32,7 @@
 }
 
 #open-post .content {
-  overflow-y: auto;
+  overflow-y: scroll;
 }
 
 .post-title {
@@ -54,7 +54,7 @@
   position: relative;
 }
 
-.post-subseddit:hover, .author:hover, .time-lapsed:hover, .edit-link:hover {
+.user:not(.disabled):hover, .time-lapsed:not(.disabled):hover, .edit-link:not(.disabled):hover {
   cursor: pointer;
   text-decoration: underline;
 }
@@ -64,15 +64,11 @@
   font-weight: bold;
 }
 
-.post-subseddit:hover {
-  color: #aaa;
-}
-
-.author {
+.user {
   color: var(--reddit-blue);
 }
 
-.author:hover {
+.user:not(.disabled):hover {
   color: var(--reddit-blue-lighter);
 }
 
@@ -80,7 +76,7 @@
   color: var(--reddit-blue);
 }
 
-.edit-link:hover {
+.edit-link:not(.disabled):hover {
   color: var(--reddit-blue-lighter);
 }
 
@@ -88,7 +84,7 @@
   text-decoration: underline dotted;
 }
 
-.time-lapsed:hover {
+.time-lapsed:not(.disabled):hover {
   color: #ccc;
 }
 
@@ -211,7 +207,7 @@
   border-right: 10px solid transparent;
 }
 
-.upvote-icon.upvoted .arrow-up {
+.upvote-icon.upvoted .arrow-up, .arrow-up {
   border-bottom-color: var(--reddit-orange);
 }
 
@@ -260,25 +256,21 @@
   font-size: 14px;
 }
 
-.space-bottom {
-  height: 30px;
-}
-
-#upvoters {
+.users {
   display: flex;
   width: 100%;
 }
 
-#upvoters p {
+.users p {
   font-size: 12px;
 }
 
-.upvoters-list {
+.users-list {
   display: flex;
   overflow-x: auto;
 }
 
-.upvoters-list .author {
+.users-list .user {
   margin-left: 5px;
 }
 
@@ -286,7 +278,7 @@
   margin-top: 0;
 }
 
-.upvoters-label {
+.users-label {
   color: #999;
 }
 

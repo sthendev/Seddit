@@ -22,6 +22,7 @@ const switchPublicPosts = async () => {
             postsLoading: false, 
             posts: [...response.data],
             publicPosts: true,
+            searchResults: false,
             noMorePosts: true
         });
     }
@@ -54,6 +55,7 @@ const switchFeedPosts = async () => {
                 postsLoading: false,
                 posts: [...response.data],
                 publicPosts: false,
+                searchResults: false,
                 noMorePosts: false
             });
         }
@@ -62,15 +64,15 @@ const switchFeedPosts = async () => {
 }
 
 const SwitchPostsButton = () => {
-    if (!getState().loggedInUser) return null;
+    if (!getState().loggedInUsername) return null;
     
     const el = button({
         classes: ['button', 'button-secondary', 'switch-posts'],
-        text: `${getState().publicPosts ? 'Back to Feed' : 'Public Posts'}`
+        text: `${getState().publicPosts || getState().searchResults ? 'Back to Feed' : 'Public Posts'}`
     })
 
     el.addEventListener('click', () => {
-        if (getState().publicPosts) {
+        if (getState().publicPosts || getState().searchResults) {
             switchFeedPosts();
         } else {
             switchPublicPosts();

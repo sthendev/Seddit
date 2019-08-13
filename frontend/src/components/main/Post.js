@@ -1,11 +1,11 @@
 import { li, div, h4, p, img } from '../../utils/elements.js';
 import SubLink from './SubLink.js';
-import UserLink from './UserLink.js';
+import UserLink from '../user/UserLink.js';
 import TimeLapsed from './TimeLapsed.js';
 import Space from '../common/Space.js';
 import CommentButton from './CommentButton.js';
 import Voter from './Voter.js';
-import Modal from '../modal/Modal.js';
+import { openModal } from '../modal/Modal.js';
 import OpenPost from './OpenPost.js';
 import { getState, setState } from '../../state/state.js';
 
@@ -33,7 +33,7 @@ const Post = ({index, id, clickable, text, title, meta: {author, subseddit, publ
                 p({
                     text: 'Posted by ',
                 }),
-                UserLink(author),
+                UserLink(author, !clickable),
                 Space(),
                 TimeLapsed(publishedTime)
             ),
@@ -52,14 +52,10 @@ const Post = ({index, id, clickable, text, title, meta: {author, subseddit, publ
         )
     );
 
-    el.addEventListener('click', () => {
+    clickable && el.addEventListener('click', () => {
         if (getState().modalOpen) return;
-        setState({modalOpen: true, openPostIndex: index});
-        document.getElementById('app').appendChild(Modal(OpenPost()));
-        if (document.getElementById('open-post').scrollHeight > window.innerHeight - 100) {
-            document.getElementById('modal').querySelector('#close-button').style.paddingRight = `${25}px`;
-        }
-        document.getElementById('main').style.overflow = 'hidden';
+        setState({openPostId: id});
+        openModal(OpenPost);   
     })
 
     return el;

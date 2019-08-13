@@ -3,7 +3,7 @@ import callApi from '../utils/callApi.js';
 import { TOKEN } from '../api/initApi.js';
 import { getState } from '../state/state.js';
 
-export const getLoggedInUser = async () => {
+export const getLoggedInUsername = async () => {
     const request = {
         method: 'GET',
         headers: {
@@ -21,15 +21,8 @@ export const getLoggedInUser = async () => {
         return output;
     }
 
-    const usernames = [];
-    for (let userId of responseData.following) {
-        const {data: {username}} = await getUser({id: userId});
-        usernames.push(username);
-    }
-    responseData.following = usernames;
-
     output.hasError = false;
-    output.data = responseData;
+    output.data = responseData.username;
 
     return output;
 }
@@ -62,15 +55,13 @@ export const getFeedPosts = async (startBeginning) => {
         return output;
     }
 
-    if (getState().loggedInUser) {
-        for (let post of responseData.posts) {
-            const usernames = [];
-            for (let upvoterId of post.meta.upvotes) {
-                const {data: {username}} = await getUser({id: upvoterId});
-                usernames.push(username);
-            }
-            post.meta.upvotes = usernames;
+    for (let post of responseData.posts) {
+        const usernames = [];
+        for (let upvoterId of post.meta.upvotes) {
+            const username = await getUsernameFromId(upvoterId);
+            usernames.push(username);
         }
+        post.meta.upvotes = usernames;
     }
 
     output.hasError = false;
@@ -79,7 +70,7 @@ export const getFeedPosts = async (startBeginning) => {
     return output;
 }
 
-export const getUser = async ({id, username}) => {
+export const getUsernameFromId = async (id) => {
     const request = {
         method: 'GET',
         headers: {
@@ -87,9 +78,30 @@ export const getUser = async ({id, username}) => {
         }
     };
 
-    const queryParams = {}
-    if (id) queryParams.id = id;
-    if (username) queryParams.username = username;
+    const queryParams = {
+        id: id
+    }
+
+    const [status, responseData] = await callApi(api.requestUser, request, queryParams);
+
+    if (status === 200) {
+        return responseData.username;
+    } else {
+        return undefined;
+    }
+}
+
+export const getUser = async (username) => {
+    const request = {
+        method: 'GET',
+        headers: {
+            'Authorization': `Token ${TOKEN}`
+        }
+    };
+
+    const queryParams = {
+        username: username
+    }
 
     const output = {};
 
@@ -104,5 +116,37 @@ export const getUser = async ({id, username}) => {
     }
 
     return output;
+}
+
+export const follow = async (username, isFollow) => {
+    const request = {
+        method: 'PUT',
+        headers: {
+            'Authorization': `Token ${TOKEN}`
+        }
+    }
+
+    const queryParams = {
+        username: username
+    }
+
+    if (isFollow) {
+        callApi(api.requestFollow, request, queryParams);
+    } else {
+        callApi(api.requestUnfollow, request, queryParams);
+    }
+}
+
+export const editProfile = async (payload) => {
+    const request = {
+        method: 'PUT',
+        headers: {
+            'Authorization': `Token ${TOKEN}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+    }
+
+    callApi(api.requestUser, request);
 }
 

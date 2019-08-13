@@ -1,6 +1,6 @@
 import * as api from '../api/postApi.js';
 import callApi from '../utils/callApi.js';
-import { getUser } from './userActions.js';
+import { getUsernameFromId } from './userActions.js';
 import { getState, setState } from '../state/state.js';
 import { TOKEN } from '../api/initApi.js';
 
@@ -19,11 +19,11 @@ export const getPublicPosts = async () => {
         return output;
     }
 
-    if (getState().loggedInUser) {
+    if (getState().loggedInUsername) {
         for (let post of responseData.posts) {
             const usernames = [];
             for (let upvoterId of post.meta.upvotes) {
-                const {data: {username}} = await getUser({id: upvoterId});
+                const username = await getUsernameFromId(upvoterId);
                 usernames.push(username);
             }
             post.meta.upvotes = usernames;
@@ -92,6 +92,21 @@ export const update = async (payload, postId) => {
     return output;
 }
 
+export const deletePost = async (postId) => {
+    const request = {
+        method: 'DELETE',
+        headers: {
+            'Authorization': `Token ${TOKEN}`
+        }
+    }
+
+    const queryParams = {
+        id: postId
+    }
+
+    callApi(api.requestPost, request, queryParams);
+}
+
 export const upvote = async (postId, addVote) => {
     const request = {
         method: addVote ? 'PUT' : 'DELETE',
@@ -124,4 +139,26 @@ export const comment = async (comment, postId) => {
     }
 
     callApi(api.requestComment, request, queryParams);
+}
+
+export const getPostFromId = async (id) => {
+    const request = {
+        method: 'GET',
+        headers: {
+            'Authorization': `Token ${TOKEN}`,
+            'Content-Type': 'application/json'
+        }
+    }
+
+    const queryParams = {
+        id: id
+    }
+
+    const [status, responseData] = await callApi(api.requestPost, request, queryParams);
+
+    if (status === 200) {
+        return responseData;
+    } else {
+        return null;
+    }
 }

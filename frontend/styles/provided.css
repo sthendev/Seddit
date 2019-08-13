@@ -207,6 +207,10 @@ input:disabled, textarea:disabled {
   text-transform: none;
 }
 
+.space-bottom {
+  height: 30px;
+}
+
 .flex {
   display: flex;
 }
