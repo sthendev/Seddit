@@ -59,7 +59,6 @@ const switchFeedPosts = async () => {
                 noMorePosts: false
             });
         }
-        
     }
 }
 

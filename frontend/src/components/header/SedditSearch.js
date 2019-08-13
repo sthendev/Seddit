@@ -35,10 +35,9 @@ const search = async (query) => {
 }
 
 const SedditSearch = () => {
-    if (!getState().loggedInUsername) return null;
-
     const el = input({
         id: 'search',
+        classes: getState().loggedInUsername ? ['invisible'] : [],
         placeholder: 'Search Seddit',
         type: 'search',
         data: 'id-search'

@@ -211,6 +211,10 @@ input:disabled, textarea:disabled {
   height: 30px;
 }
 
+.invisible {
+  visibility: hidden;
+}
+
 .flex {
   display: flex;
 }
